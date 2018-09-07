@@ -2,7 +2,7 @@ const http = require('https');
 const TOKEN=process.env.SLACK_TOKEN;
 
 const constructReqOptions=function(data) {
-  const options = {
+  return {
     hostname: 'slack.com',
     path: `/api/chat.postMessage?token=${TOKEN}&text=${data.message}&channel=${data.to}&username=${data.from}`,
     method: 'POST',
@@ -11,16 +11,15 @@ const constructReqOptions=function(data) {
         'User-Agent': 'sayali'
     }
   };
-
-  return options;
 }
 
 const postMessage=function(data) {
   options=constructReqOptions(data);
+  console.log(`Posting message on slack ${data.message}`);
 
   const req = http.request(options, function(res) {
-    console.log('Status: ' + res.statusCode);
-    console.log('Headers: ' + JSON.stringify(res.headers));
+    console.log('Response Status: ' + res.statusCode);
+    console.log('Response Headers: ' + JSON.stringify(res.headers));
     res.setEncoding('utf8');
     res.on('data', function (body) {
       console.log('Body: ' + body);

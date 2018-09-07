@@ -2,7 +2,7 @@ const http = require('http');
 const slackService = require('./slack-service.js');
 
 const constructReqOptions=function(data) {
-  return options = {
+  return {
     hostname: 'namingservice-test.herokuapp.com',
     headers: {
       'Authorization': process.env.NAMING_SERVICE_TOKEN,
@@ -15,6 +15,7 @@ const constructReqOptions=function(data) {
 const fetch = function(data) {
 
   options=constructReqOptions(data);
+  console.log(`Fetching data from ${options.hostname}${options.path}`);
 
   http.get(options, (res) => {
    let rawData = '';

@@ -7,6 +7,7 @@ const port = process.env.NS_PORT || 8080;
 app.use(bodyParser.json());
 
 app.post('/notify',(req,res)=>{
+  console.log(`Notifying ${req.body.to} as a ${req.body.from} saying ${req.body.message}`);
   namingService.fetch(req.body);
   res.send({"status": "success"});
 })
